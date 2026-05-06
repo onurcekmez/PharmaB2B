@@ -1,0 +1,478 @@
+/* =====================================================
+   Pharmacy Supply Chain B2B Platform - Stylesheet
+   Basit, temiz, akademik proje görünümü
+   ===================================================== */
+
+/* -- Reset -- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f0f0;
+    color: #333;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+    color: #0066cc;
+}
+
+/* =====================================================
+   NAVIGATION
+   ===================================================== */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #333;
+    padding: 0 20px;
+    height: 50px;
+}
+
+.nav-brand a {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2px;
+}
+
+.nav-links a {
+    padding: 6px 14px;
+    color: #ccc;
+    font-size: 0.9rem;
+    border-radius: 4px;
+}
+
+.nav-links a:hover {
+    background: #555;
+    color: #fff;
+}
+
+.nav-links a.active {
+    background: #0066cc;
+    color: #fff;
+}
+
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-username {
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+.btn-logout {
+    padding: 4px 12px;
+    background: #cc0000;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.btn-logout:hover {
+    background: #aa0000;
+    color: #fff;
+}
+
+/* =====================================================
+   LAYOUT
+   ===================================================== */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-header {
+    margin-bottom: 16px;
+}
+
+.page-header h1 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.page-header p {
+    color: #777;
+    font-size: 0.9rem;
+}
+
+/* =====================================================
+   CARDS
+   ===================================================== */
+.card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.card-header {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Stat cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.stat-icon {
+    font-size: 1.8rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+.stat-icon.blue   { background: #e0edff; }
+.stat-icon.green  { background: #e0f5e0; }
+.stat-icon.yellow { background: #fff8e0; }
+.stat-icon.red    { background: #ffe0e0; }
+.stat-icon.cyan   { background: #e0f8f8; }
+
+.stat-info h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.stat-info p {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+/* =====================================================
+   TABLES
+   ===================================================== */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+thead th {
+    background: #f5f5f5;
+    font-weight: bold;
+    text-align: left;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    color: #444;
+}
+
+tbody td {
+    padding: 8px 10px;
+    border: 1px solid #eee;
+}
+
+tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+tbody tr:hover {
+    background: #f0f0f0;
+}
+
+/* =====================================================
+   BADGES
+   ===================================================== */
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.badge-pending    { background: #fff3cd; color: #856404; }
+.badge-approved   { background: #d1ecf1; color: #0c5460; }
+.badge-rejected   { background: #f8d7da; color: #721c24; }
+.badge-shipped    { background: #cce5ff; color: #004085; }
+.badge-delivered  { background: #d4edda; color: #155724; }
+.badge-cancelled  { background: #e2e3e5; color: #383d41; }
+.badge-preparing  { background: #fff3cd; color: #856404; }
+.badge-in_transit { background: #d1ecf1; color: #0c5460; }
+
+/* =====================================================
+   BUTTONS
+   ===================================================== */
+.btn {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: normal;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: #0066cc;
+    color: #fff;
+    border-color: #0055aa;
+}
+.btn-primary:hover { background: #0055aa; color: #fff; }
+
+.btn-success {
+    background: #28a745;
+    color: #fff;
+    border-color: #218838;
+}
+.btn-success:hover { background: #218838; color: #fff; }
+
+.btn-danger {
+    background: #dc3545;
+    color: #fff;
+    border-color: #c82333;
+}
+.btn-danger:hover { background: #c82333; color: #fff; }
+
+.btn-warning {
+    background: #ffc107;
+    color: #333;
+    border-color: #e0a800;
+}
+.btn-warning:hover { background: #e0a800; color: #333; }
+
+.btn-secondary {
+    background: #e9ecef;
+    color: #555;
+    border-color: #ddd;
+}
+.btn-secondary:hover { background: #ddd; }
+
+.btn-sm {
+    padding: 3px 10px;
+    font-size: 0.8rem;
+}
+
+/* =====================================================
+   FORMS
+   ===================================================== */
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.form-control {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: #fff;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #0066cc;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* =====================================================
+   LOGIN
+   ===================================================== */
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e8e8e8;
+}
+
+.login-card {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 30px;
+    width: 100%;
+    max-width: 380px;
+}
+
+.login-card h1 {
+    text-align: center;
+    font-size: 1.3rem;
+    margin-bottom: 4px;
+}
+
+.login-card .subtitle {
+    text-align: center;
+    color: #888;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+}
+
+.login-card .brand {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+/* =====================================================
+   ALERTS
+   ===================================================== */
+.alert {
+    padding: 10px 14px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    border: 1px solid;
+}
+
+.alert-success { background: #d4edda; color: #155724; border-color: #c3e6cb; }
+.alert-danger  { background: #f8d7da; color: #721c24; border-color: #f5c6cb; }
+.alert-warning { background: #fff3cd; color: #856404; border-color: #ffeeba; }
+.alert-info    { background: #d1ecf1; color: #0c5460; border-color: #bee5eb; }
+
+/* =====================================================
+   SEARCH BAR
+   ===================================================== */
+.search-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.search-bar .form-control {
+    max-width: 280px;
+}
+
+/* =====================================================
+   ORDER CREATION
+   ===================================================== */
+.medicine-select-table .qty-input {
+    width: 70px;
+    padding: 4px;
+    text-align: center;
+}
+
+.medicine-select-table .price-input {
+    width: 90px;
+    padding: 4px;
+    text-align: right;
+}
+
+.order-summary {
+    margin-top: 12px;
+    padding: 10px;
+    background: #e8f0fe;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Table search filter input */
+.table-filter {
+    margin-bottom: 10px;
+}
+
+.table-filter input {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    width: 250px;
+}
+
+/* Info button (eczane bilgi popup) */
+.info-btn {
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-left: 4px;
+    opacity: 0.7;
+}
+.info-btn:hover {
+    opacity: 1;
+}
+
+/* =====================================================
+   UTILITY
+   ===================================================== */
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+.text-muted  { color: #888; }
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 8px;
+        gap: 6px;
+    }
+    .nav-links { flex-wrap: wrap; justify-content: center; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .search-bar .form-control { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .container { padding: 12px; }
+}
