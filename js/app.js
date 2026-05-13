@@ -154,8 +154,11 @@ function renderMedicineTable(medicines, container) {
                 <th>Kategori</th>
                 <th>Stok</th>
                 <th>Birim Fiyat (₺)</th>
-                <th>Son Kullanma</th>
-            </tr>
+                <th>Son Kullanma</th>`;
+    if (window.IS_ADMIN) {
+        html += `<th>İşlemler</th>`;
+    }
+    html += `</tr>
         </thead>
         <tbody>`;
 
@@ -166,8 +169,16 @@ function renderMedicineTable(medicines, container) {
             <td>${escapeHtml(med.category)}</td>
             <td style="${stockClass}">${med.stock_quantity}</td>
             <td>${parseFloat(med.unit_price).toFixed(2)}</td>
-            <td>${med.expiration_date}</td>
-        </tr>`;
+            <td>${med.expiration_date}</td>`;
+        if (window.IS_ADMIN) {
+            html += `<td>
+                <form method="POST" style="display:inline;" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
+                    <input type="hidden" name="delete_med_id" value="${med.medicine_id}">
+                    <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                </form>
+            </td>`;
+        }
+        html += `</tr>`;
     });
 
     html += '</tbody></table>';

@@ -18,6 +18,29 @@ require_once 'includes/auth.php';
 require_once 'includes/db.php';
 authorize('admin');
 
+// -- Handle Admin Actions --
+$msg = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['delete_user_id'])) {
+        $del_id = intval($_POST['delete_user_id']);
+        if ($del_id != $_SESSION['user_id']) { // Prevent self-deletion
+            $stmt = $pdo->prepare("DELETE FROM users WHERE user_id = ?");
+            $stmt->execute([$del_id]);
+            $msg = "<div class='alert alert-success'>Kullanıcı silindi.</div>";
+        } else {
+            $msg = "<div class='alert alert-danger'>Kendinizi silemezsiniz.</div>";
+        }
+    } elseif (isset($_POST['update_role_id']) && isset($_POST['new_role'])) {
+        $upd_id = intval($_POST['update_role_id']);
+        $new_role = $_POST['new_role'];
+        if (in_array($new_role, ['admin', 'pharmacy', 'warehouse'])) {
+            $stmt = $pdo->prepare("UPDATE users SET role = ? WHERE user_id = ?");
+            $stmt->execute([$new_role, $upd_id]);
+            $msg = "<div class='alert alert-success'>Kullanıcı rolü güncellendi.</div>";
+        }
+    }
+}
+
 // -- All users --
 $users = $pdo->query("SELECT user_id, username, email, role, created_at FROM users ORDER BY user_id")->fetchAll();
 
@@ -85,9 +108,11 @@ function statusLabel($s) {
         <p>Sistem genelindeki veriler ve SQL sorgu örnekleri</p>
     </div>
 
+    <?php if ($msg) echo $msg; ?>
+
     <!-- Users List -->
     <div class="card mb-3">
-        <div class="card-header">👥 Kullanıcılar</div>
+        <div class="card-header">👥 Kullanıcılar (Yönetici Yetkisiyle Düzenleme/Silme)</div>
         <div class="table-wrapper">
             <table>
                 <thead>
@@ -97,6 +122,7 @@ function statusLabel($s) {
                         <th>E-posta</th>
                         <th>Rol</th>
                         <th>Kayıt Tarihi</th>
+                        <th>İşlemler</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -105,8 +131,23 @@ function statusLabel($s) {
                         <td><?= $u['user_id'] ?></td>
                         <td><?= htmlspecialchars($u['username']) ?></td>
                         <td><?= htmlspecialchars($u['email']) ?></td>
-                        <td><span class="badge badge-approved"><?= $u['role'] ?></span></td>
+                        <td>
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="update_role_id" value="<?= $u['user_id'] ?>">
+                                <select name="new_role" onchange="this.form.submit()" style="padding: 2px;">
+                                    <option value="pharmacy" <?= $u['role'] === 'pharmacy' ? 'selected' : '' ?>>Pharmacy</option>
+                                    <option value="warehouse" <?= $u['role'] === 'warehouse' ? 'selected' : '' ?>>Warehouse</option>
+                                    <option value="admin" <?= $u['role'] === 'admin' ? 'selected' : '' ?>>Admin</option>
+                                </select>
+                            </form>
+                        </td>
                         <td><?= date('d.m.Y H:i', strtotime($u['created_at'])) ?></td>
+                        <td>
+                            <form method="POST" style="display:inline;" onsubmit="return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?');">
+                                <input type="hidden" name="delete_user_id" value="<?= $u['user_id'] ?>">
+                                <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                            </form>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>

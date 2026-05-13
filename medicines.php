@@ -13,6 +13,14 @@ require_once 'includes/auth.php';
 require_once 'includes/db.php';
 authorize(['pharmacy', 'admin']);
 
+$msg = '';
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_med_id']) && $_SESSION['role'] === 'admin') {
+    $del_id = intval($_POST['delete_med_id']);
+    $stmt = $pdo->prepare("DELETE FROM medicines WHERE medicine_id = ?");
+    $stmt->execute([$del_id]);
+    $msg = "<div class='alert alert-success'>İlaç silindi.</div>";
+}
+
 // Initial load: get all medicines
 $stmt = $pdo->query("SELECT * FROM medicines ORDER BY medicine_name ASC");
 $medicines = $stmt->fetchAll();
@@ -39,6 +47,8 @@ $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
         <p>İlaçları arayın ve stok durumlarını görüntüleyin</p>
     </div>
 
+    <?php if ($msg) echo $msg; ?>
+
     <!-- Search & Filter Bar (triggers AJAX) -->
     <div class="search-bar">
         <input type="text" id="medicine-search" class="form-control" 
@@ -64,6 +74,9 @@ $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
                             <th>Stok</th>
                             <th>Birim Fiyat (₺)</th>
                             <th>Son Kullanma</th>
+                            <?php if ($_SESSION['role'] === 'admin'): ?>
+                            <th>İşlemler</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,6 +89,14 @@ $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
                             </td>
                             <td><?= number_format($med['unit_price'], 2, ',', '.') ?></td>
                             <td><?= date('d.m.Y', strtotime($med['expiration_date'])) ?></td>
+                            <?php if ($_SESSION['role'] === 'admin'): ?>
+                            <td>
+                                <form method="POST" style="display:inline;" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
+                                    <input type="hidden" name="delete_med_id" value="<?= $med['medicine_id'] ?>">
+                                    <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                </form>
+                            </td>
+                            <?php endif; ?>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -85,6 +106,9 @@ $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
     </div>
 </div>
 
+<script>
+    window.IS_ADMIN = <?= $_SESSION['role'] === 'admin' ? 'true' : 'false' ?>;
+</script>
 <script src="js/app.js"></script>
 </body>
 </html>
